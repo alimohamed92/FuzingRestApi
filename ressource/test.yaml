@@ -1,0 +1,32 @@
+title: periods
+given:
+  dataset: "sccr_dataset"
+  forcereloaddataset: true
+  header:
+    - key: "sm_universalid"
+      value: "ABCD1234"
+wts:
+  - title: Getting  periods
+    when:
+      request: "GET"
+      url: "/sccr/periods"
+      params: 
+        - key: "perimeter"
+          value: "1"
+        - key: "end"
+          value: "1470009600000"
+    then:
+      status: 200
+      body: [{"periodId":1,"perimeter":1,"from":1467331200000,"to":1467331200000,"validated":null,"validationDate":null,"periodStatus":"2","rscFirstName":null,"rscLastName":null,"rscAllianceCode":null,"validatorFirstName":null,"validatorLastName":null,"validatorAllianceCode":null,"validationType":null,"frequency":null,"label":null,"bidSubscriptions":1},{"periodId":5,"perimeter":1,"from":1464739200000,"to":1467331200000,"validated":null,"validationDate":null,"periodStatus":"0","rscFirstName":null,"rscLastName":null,"rscAllianceCode":null,"validatorFirstName":null,"validatorLastName":null,"validatorAllianceCode":null,"validationType":null,"frequency":null,"label":null,"bidSubscriptions":1},{"periodId":3,"perimeter":1,"from":1464739200000,"to":1470009600000,"validated":null,"validationDate":null,"periodStatus":"1","rscFirstName":null,"rscLastName":null,"rscAllianceCode":null,"validatorFirstName":null,"validatorLastName":null,"validatorAllianceCode":null,"validationType":null,"frequency":null,"label":null,"bidSubscriptions":1},{"periodId":4,"perimeter":1,"from":1464739200000,"to":1470009600000,"validated":null,"validationDate":null,"periodStatus":"1","rscFirstName":null,"rscLastName":null,"rscAllianceCode":null,"validatorFirstName":null,"validatorLastName":null,"validatorAllianceCode":null,"validationType":null,"frequency":null,"label":null,"bidSubscriptions":1}]
+  - title: Getting  empty list period
+    when:
+      request: "GET"
+      url: "/sccr/periods"
+      params: 
+        - key: "perimeter"
+          value: "3"
+        - key: "end"
+          value: "1470009600000"
+    then:
+      status: 200
+      body: []

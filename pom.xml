@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>io.swagger</groupId>
-			<artifactId>swagger-parser</artifactId>
+			<artifactId>swagger-compat-spec-parser</artifactId>
 			<version>1.0.22</version>
 		</dependency>
 	</dependencies>
