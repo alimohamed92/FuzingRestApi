@@ -10,7 +10,7 @@ public class TestSwagger {
 		 System.out.println("**********Bonjour "+swagger.getBasePath());
 		 
 		 for(Path p : swagger.getPaths().values()){
-			 //System.out.print("$$ "+p.);
+			 System.out.print("$$ "+p.getOperations());
 			 if(p.getGet() !=null)
 			 System.out.println(" $${ Param : "+p.getGet().getParameters()+",\n Summary :"+p.getGet().getSummary()+",\n Response : "+p.getGet().getResponses()+"}");
 		 }
