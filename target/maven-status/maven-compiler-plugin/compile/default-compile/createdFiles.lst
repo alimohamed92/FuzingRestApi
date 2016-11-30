@@ -1,2 +1,6 @@
 org\esir\AliMax\FuzingRestApi\App.class
 org\esir\AliMax\FuzingRestApi\TestSwagger.class
+org\esir\AliMax\FuzingRestApi\model\TestBadUrl.class
+org\esir\AliMax\FuzingRestApi\model\ModelTest.class
+org\esir\AliMax\FuzingRestApi\model\TestBadParam.class
+org\esir\AliMax\FuzingRestApi\model\VerifyCode.class
