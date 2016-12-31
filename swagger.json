@@ -436,7 +436,7 @@
     "/sccr/periods" : {
       "get" : {
         "tags" : [ "ORA - SCCR" ],
-        "summary" : "Send SCC Réseaux periods",
+        "summary" : "Send SCC Rï¿½seaux periods",
         "description" : "",
         "operationId" : "getPeriods",
         "produces" : [ "application/json" ],
@@ -1081,7 +1081,7 @@
         },
         "site" : {
           "type" : "string",
-          "example" : "Sète"
+          "example" : "Sï¿½te"
         },
         "accessReference" : {
           "type" : "string",
@@ -1124,7 +1124,7 @@
       "properties" : {
         "comment" : {
           "type" : "string",
-          "example" : "Vous nous avez dit, nous avons décidé"
+          "example" : "Vous nous avez dit, nous avons dï¿½cidï¿½"
         },
         "periodId" : {
           "type" : "integer",
@@ -1443,11 +1443,11 @@
         },
         "AccessA" : {
           "type" : "string",
-          "example" : "Sète"
+          "example" : "Sï¿½te"
         },
         "AccessB" : {
           "type" : "string",
-          "example" : "Sète"
+          "example" : "Sï¿½te"
         },
         "measureSort" : {
           "type" : "string",
@@ -1878,7 +1878,7 @@
         },
         "way" : {
           "type" : "string",
-          "example" : "réception"
+          "example" : "rï¿½ception"
         }
       }
     },

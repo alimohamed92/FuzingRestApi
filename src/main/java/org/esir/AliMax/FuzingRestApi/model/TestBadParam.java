@@ -5,19 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-
 import io.swagger.models.Path;
 import io.swagger.models.parameters.Parameter;
 
 public class TestBadParam extends ModelTest {
-	
+
 	public TestBadParam(Map<String, Path> paths) {
 		super("BAD PARAM ", paths);
 		// TODO Auto-generated constructor stub
@@ -35,8 +27,8 @@ public class TestBadParam extends ModelTest {
 		return res;
 	}
 
-	private String get(int nbUrl,String baseUrl){
-		String res = "******BAD PARAM GET METHODE***** \n";
+	public String testGetBadParam(int nbUrl,String baseUrl){
+		String res = "";
 		List<String> l = this.selectUrl(nbUrl);
 		for(String url : l){
 			Path p = this.paths.get(url);
@@ -44,81 +36,68 @@ public class TestBadParam extends ModelTest {
 				int index = (int) (Math.random()*(p.getGet().getParameters().size()-1));
 				Parameter param = p.getGet().getParameters().get(index );
 				String badParam = param.getName()+"bad"; //param.getPattern()
-				int statuCode = 0;
-				try {
-					url = baseUrl + url;
-					HttpClient client = new HttpClient();
-					//System.out.println("URL!!!!!!!!!!!! "+url);
-					HttpMethod m = new GetMethod(url);
-					HttpMethodParams params = new HttpMethodParams();
-					params.setParameter(badParam, "");
-					m.setParams(params);
-					statuCode = client.executeMethod(m);
-				} catch (HttpException e) {
-					statuCode = 11000;
-					System.out.println(e.toString());
-				} catch (IOException e) {
-					statuCode = 111111;
-					System.out.println(e.toString());
-				}catch (Exception e) {
-					statuCode = 111000;
-					System.out.println(e.toString());
-				}
+				param.setName(badParam);
+				List<Parameter> params = new ArrayList<Parameter>();
+				params .add(param);
+				url = baseUrl + url;
+				int statuCode = MyHttp.get(url, params).getCode();
+				//String str = new String(m.getResponseBody());
+				//					 JSONObject jsonObj = new JSONObject(str);
+				//					 Object o = jsonObj.get("code");
+				//					 Swagger swagger = new SwaggerParser().read("swagger1.json");
+				//					 Model model = swagger.getDefinitions().get("PriceEstimate");
+				//					System.out.println("$$$$$ "+jsonObj+" comparType : "+ComparateurType.verifierTypeRef(model, jsonObj)+jsonObj.getClass().getSimpleName());
 				String resTest = ""; 
+				String classColor = "";
 				if(statuCode == 404){
-					resTest = "{OK}";
+					resTest = "OK";
+					classColor = "class=\"hidden-xs bg-success\"";
 				}
 				else {
-					resTest = "{KO}--->"+statuCode;
+					resTest = "KO";
+					classColor = "class=\"hidden-xs bg-danger\"";
 				}
-				res+="{$ GET "+url+" BAD_PARAM : "+badParam+" Résultat TEST : "+resTest+"}\n";
+				res += "<tr "+classColor+">";
+				res+="<td>"+this.getTestName()+" </td><td> GET "+"</td><td>  "+url+" Param = "+badParam+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";
 			}
 		}
 		return res;
 
 	}
-	
-	private String post(int nbUrl,String baseUrl){
-		String res = "******BAD PARAM POST METHODE***** \n";
+
+	public String testPostBadParam(int nbUrl,String baseUrl){
+		String res = "";
 		List<String> l = this.selectUrl(nbUrl);
 		for(String url : l){
 			Path p = this.paths.get(url);
-			if(p.getPost() != null && p.getPost() .getParameters() != null && p.getPost().getParameters().size()!=0){
+			if(p.getPost() != null && p.getPost().getParameters() != null && p.getPost().getParameters().size()!=0){
 				int index = (int) (Math.random()*(p.getPost().getParameters().size()-1));
 				Parameter param = p.getPost().getParameters().get(index );
 				String badParam = param.getName()+"bad"; //param.getPattern()
-				int statuCode = 0;
-				try {
-					url = baseUrl + url;
-					HttpClient client = new HttpClient();
-					HttpMethod m = new PostMethod(url);
-					HttpMethodParams params = new HttpMethodParams();
-					params.setParameter(badParam, "");
-					m.setParams(params);
-					statuCode = client.executeMethod(m);
-				} catch (HttpException e) {
-					statuCode = 11000;
-					System.out.println(e.toString());
-				} catch (IOException e) {
-					statuCode = 111111;
-					System.out.println(e.toString());
-				}
+				param.setName(badParam);
+				List<Parameter> params = new ArrayList<Parameter>();
+				params .add(param);
+				url = baseUrl + url;
+				int statuCode = MyHttp.post(url, params).getCode();
 				String resTest = ""; 
+				String classColor = "";
 				if(statuCode == 404){
-					resTest = "{OK}";
+					resTest = "OK";
+					classColor = "class=\"hidden-xs bg-success\"";
 				}
 				else {
-					resTest = "{KO}--->"+statuCode;
+					resTest = "KO";
+					classColor = "class=\"hidden-xs bg-danger\"";
 				}
-				res+="{$ GET "+url+" BAD_PARAM : "+badParam+" Résultat TEST : "+resTest+"}\n";
-			}
+				res += "<tr "+classColor+">";
+				res+="<td>"+this.getTestName()+" </td><td> POST "+"</td><td>  "+url+" Param = "+badParam+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";	}
 		}
 		return res;
 
 	}
 
-	private String put(int nbUrl,String baseUrl){
-		String res = "******BAD PARAM PUT METHODE***** \n";
+	public String testPutBadParam(int nbUrl,String baseUrl){
+		String res = "";
 		List<String> l = this.selectUrl(nbUrl);
 		for(String url : l){
 			Path p = this.paths.get(url);
@@ -126,38 +105,30 @@ public class TestBadParam extends ModelTest {
 				int index = (int) (Math.random()*(p.getPut().getParameters().size()-1));
 				Parameter param = p.getPut().getParameters().get(index );
 				String badParam = param.getName()+"bad"; //param.getPattern()
-				int statuCode = 0;
-				try {
-					url = baseUrl + url;
-					HttpClient client = new HttpClient();
-					HttpMethod m = new PutMethod(url);
-					HttpMethodParams params = new HttpMethodParams();
-					params.setParameter(badParam, "");
-					m.setParams(params);
-					statuCode = client.executeMethod(m);
-				} catch (HttpException e) {
-					statuCode = 11000;
-					System.out.println(e.toString());
-				} catch (IOException e) {
-					statuCode = 111111;
-					System.out.println(e.toString());
-				}
+				param.setName(badParam);
+				List<Parameter> params = new ArrayList<Parameter>();
+				params .add(param);
+				url = baseUrl + url;
+				int statuCode = MyHttp.put(url, params).getCode();
 				String resTest = ""; 
+				String classColor = "";
 				if(statuCode == 404){
-					resTest = "{OK}";
+					resTest = "OK";
+					classColor = "class=\"hidden-xs bg-success\"";
 				}
 				else {
-					resTest = "{KO}--->"+statuCode;
+					resTest = "KO";
+					classColor = "class=\"hidden-xs bg-danger\"";
 				}
-				res+="{$ GET "+url+" BAD_PARAM : "+badParam+" Résultat TEST : "+resTest+"}\n";
-			}
+				res += "<tr "+classColor+">";
+				res+="<td>"+this.getTestName()+" </td><td> PUT "+"</td><td>  "+url+" Param = "+badParam+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";	}
 		}
 		return res;
 
 	}
 	@Override
 	public String generateReport(String url) {
-		return this.get(5,url) + this.post(5, url)+this.put(5, url);
+		return this.testGetBadParam(5,url) + this.testPostBadParam(5, url)+this.testPutBadParam(5, url);
 	}
 
 }

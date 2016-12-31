@@ -1,21 +1,15 @@
 package org.esir.AliMax.FuzingRestApi.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
 
 import io.swagger.models.Path;
 
 public class TestBadUrl extends ModelTest{
+	private static final String GET = "GET";
+	private static final String POST = "POST";
+	private static final String PUT = "PUT";
 	private int nbBadUrl;
 
 	public TestBadUrl( int nbBadUrl,Map<String,Path> paths) {
@@ -25,7 +19,7 @@ public class TestBadUrl extends ModelTest{
 
 	@Override
 	public String generateReport(String url) {
-		String res = "{$";
+		String res="";
 		List<String> urls = new ArrayList<String>();
 		urls.addAll(this.paths.keySet());
 		for(int i = 0; i < this.nbBadUrl; i++ ){
@@ -35,35 +29,28 @@ public class TestBadUrl extends ModelTest{
 				badUrl+=Math.random()*urls.size();
 			}
 			badUrl= url+badUrl;
-			//badUrl = tmp;
-			List<HttpMethod> methods = new ArrayList<HttpMethod>();
+			List<String> methods = new ArrayList<String>();
 			try {
-				methods.add(new GetMethod(badUrl));
-				methods.add(new PostMethod(badUrl));
-				methods.add(new PutMethod(badUrl));
+				methods.add(GET);
+				methods.add(POST);
+				methods.add(PUT);
 			} catch (Exception e) {
 				System.out.println(e.toString());
 			}
-			for(HttpMethod m : methods){
-				int statuCode = 0;
-				try {
-					HttpClient client = new HttpClient();
-					statuCode = client.executeMethod(m);
-				} catch (HttpException e) {
-					statuCode = 11000;
-					System.out.println(e.toString());
-				} catch (IOException e) {
-					statuCode = 111111;
-					System.out.println(e.toString());
-				}
+			for(String m : methods){
+				MyHttpResponse reponse = MyHttp.httpReq(badUrl, m);
 				String resTest = "";
-				if(statuCode == 404){
-					resTest = "{OK}";
+				String classColor = "";
+				if(reponse.getCode() == 404){
+					resTest = "OK";
+					classColor = "class=\"hidden-xs bg-success\"";
 				}
-				else{
-					resTest = "{KO!}--->"+statuCode;
+				else {
+					resTest = "KO";
+					classColor = "class=\"hidden-xs bg-danger\"";
 				}
-				res+=" Méthod "+m.getName()+" BAD URL : "+badUrl+" Résultat TEST : "+resTest+"}\n{";
+				res += "<tr "+classColor+">";
+				res+="<td>"+this.getTestName()+" </td><td> "+m+"</td><td>"+badUrl+" </td><td>  "+resTest+"</td><td>"+reponse.getCode()+"</td></tr>\n";
 			}
 		}
 		return res;

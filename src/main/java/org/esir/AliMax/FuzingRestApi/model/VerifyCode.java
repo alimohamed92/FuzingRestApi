@@ -1,22 +1,14 @@
 package org.esir.AliMax.FuzingRestApi.model;
 
-import java.io.IOException;
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
 
 import io.swagger.models.Path;
 import io.swagger.models.Response;
-import io.swagger.models.apideclaration.Operation;
 
 public class VerifyCode extends ModelTest{
-	private final String CODEOK = "{OK}";
-	private final String CODEKO = "{KO}";
+	private final String CODEOK = "OK";
+	private final String CODEKO = "KO";
 	private final String GET ="GET";
 	private final String POST ="POST";
 	private final String PUT ="PUT";
@@ -26,56 +18,66 @@ public class VerifyCode extends ModelTest{
 	}
 
 	private String httpMethod (String url, Path p, String method) {
-		String result =" $ Méthode "+method+" : URL = "+url+", REPONSE = ";
-		String exception ="";
+		String res ="";
 		int statuCode = 0;
 		Map<String, Response> responseCodes = null;
-		HttpMethod m = null;
+		String methodName ="";
 		io.swagger.models.Operation operation = null;
-		
-		 if( method.equals(GET) && p.getGet()!=null){
+		MyHttpResponse reponse = new MyHttpResponse();
+		 if( method.equals(GET)){
 			 operation = p.getGet();
 			 responseCodes = p.getGet().getResponses();
-			 m = new GetMethod(url);
+			 reponse = MyHttp.get(url, p.getGet().getParameters());
+			 methodName = GET;
 		 }
-		if(method.equals(POST) && p.getPost()!=null){
+		if(method.equals(POST)){
 			operation = p.getPost();
-			m = new PostMethod(url);
+			reponse = MyHttp.post(url, p.getPost().getParameters());
 			responseCodes = p.getPost().getResponses();
+			methodName = POST;
 		}
-		else if(method.equals(PUT)&&  p.getPut()!=null){
+		else if(method.equals(PUT)){
 			operation = p.getPut();
-			m = new PutMethod(url);
+			reponse = MyHttp.put(url, p.getPut().getParameters());
+			methodName = PUT;
 			responseCodes = p.getPut().getResponses();
 		}
+		String resTest="";
+		String classColor = "";
 		if( operation != null ){
-			try {
-				HttpClient client = new HttpClient();
-				statuCode = client.executeMethod(m);
-			} catch (HttpException e) {
-				statuCode = 11000;
-				exception+=":"+ e.toString();
-			} catch (IOException e) {
-				statuCode = 111111;
-				exception+=":"+ e.toString();
-			}
+			statuCode = reponse.getCode();
 			String str = String.valueOf(statuCode);
 			if(responseCodes !=null && responseCodes.containsKey(str)){
-				result += CODEOK ;
+				resTest += CODEOK ;
+				classColor = "class=\"hidden-xs bg-success\"";
 			}
-			else result += CODEKO;
+			else {
+				resTest += CODEKO;
+				classColor = "class=\"hidden-xs bg-danger\"";
+			}
 		}
-		return result+exception;
+		res += "<tr "+classColor+">";
+		res+="<td>"+this.getTestName()+" </td><td> "+methodName+"</td><td>"+url+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";
+	
+		return res;
 	}
 	@Override
 	public String generateReport(String url) {
 		String res = "";
+		String baseUrl = url;
 		System.out.println("************* SIZE **************"+this.paths.keySet().size());
 		for(Map.Entry<String, Path> entr : this.paths.entrySet()){
 			Path p = entr.getValue();
-			//if(p.getGet() != null && p.getGet().getParameters() != null && p.getGet().getParameters().size()!=0) System.out.println("**"+p.getGet().getParameters().get(0).getAccess());
-			//url = url + entr.getKey();
-			res+= "{"+httpMethod(url,p,GET)+" "+httpMethod(url,p,POST)+" "+httpMethod(url,p,PUT)+"}\n";
+			url = baseUrl + entr.getKey();
+			if(p.getGet()!=null){
+				res+=httpMethod(url,p,GET);
+			}
+			if(p.getPost() !=null){
+				res+=httpMethod(url,p,POST);
+			}
+			if(p.getPut() !=null){
+				res+=httpMethod(url,p,PUT);
+			}
 		}
 		return res;
 	}
