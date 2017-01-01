@@ -29,7 +29,9 @@ public class AppTest
     	suite.addTestSuite(AppTest.class );
     	suite.addTestSuite(TestBadUrlUnitTest.class);
     	suite.addTestSuite(VerifyCodeUnitTest.class);
-        return suite;
+    	suite.addTestSuite(TestBadParamUnitTest.class);
+    	suite.addTestSuite(TypeRetourUnitTest.class);
+    	return suite;
     }
 
     /**

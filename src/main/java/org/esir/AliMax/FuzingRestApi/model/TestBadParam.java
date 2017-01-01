@@ -27,11 +27,11 @@ public class TestBadParam extends ModelTest {
 	private List<String> selectUrl(int nbUrl){
 		List<String> res = new ArrayList<String>();
 		res.addAll(this.paths.keySet());
-		int fromIndex = (int) (Math.random()*(res.size()/2));
-		if(nbUrl > res.size()/2){
-			nbUrl = res.size()/2;
-		}
+		int fromIndex = (int) (Math.random()*(res.size()));
 		int toIndex = fromIndex+nbUrl;
+		if(toIndex > res.size()){
+			toIndex = res.size();
+		}
 		res =res.subList(fromIndex, toIndex);
 		return res;
 	}
@@ -44,12 +44,11 @@ public class TestBadParam extends ModelTest {
 			if(p.getGet() != null && p.getGet().getParameters() != null && p.getGet().getParameters().size()!=0){
 				int index = (int) (Math.random()*(p.getGet().getParameters().size()-1));
 				Parameter param = p.getGet().getParameters().get(index );
-				String badParam = param.getName()+"BAD"; //param.getPattern()
+				String badParam = param.getName()+"BAD";
 				param.setName(badParam);
-				List<Parameter> params = new ArrayList<Parameter>();
-				params .add(param);
 				url = baseUrl + url;
-				int statuCode = myHttp.get(url, params).getCode();
+				//System.out.println(myHttp.get(url, p.getGet().getParameters())+" url "+url+" param : "+p.getGet().getParameters());
+				int statuCode = myHttp.get(url, p.getGet().getParameters()).getCode();
 				//String str = new String(m.getResponseBody());
 				//					 JSONObject jsonObj = new JSONObject(str);
 				//					 Object o = jsonObj.get("code");
@@ -70,6 +69,8 @@ public class TestBadParam extends ModelTest {
 
 	}
 
+	
+
 	public boolean testPostBadParam(int nbUrl,String baseUrl){
 		boolean res = true;
 		List<String> l = this.selectUrl(nbUrl);
@@ -78,12 +79,10 @@ public class TestBadParam extends ModelTest {
 			if(p.getPost() != null && p.getPost().getParameters() != null && p.getPost().getParameters().size()!=0){
 				int index = (int) (Math.random()*(p.getPost().getParameters().size()-1));
 				Parameter param = p.getPost().getParameters().get(index );
-				String badParam = param.getName()+"BAD"; //param.getPattern()
+				String badParam = param.getName()+"BAD";
 				param.setName(badParam);
-				List<Parameter> params = new ArrayList<Parameter>();
-				params .add(param);
 				url = baseUrl + url;
-				int statuCode = myHttp.post(url, params).getCode();
+				int statuCode = myHttp.post(url, p.getPost().getParameters()).getCode();
 				//si on a un 404 correspondant au résultat attendu, on laisse le res à sa valeur précedente 
 				//(true si on a tjrs eu 404)
 				this.motif = String.valueOf(statuCode)+" Param = "+badParam;
@@ -110,10 +109,8 @@ public class TestBadParam extends ModelTest {
 				Parameter param = p.getPut().getParameters().get(index );
 				String badParam = param.getName()+"BAD"; //param.getPattern()
 				param.setName(badParam);
-				List<Parameter> params = new ArrayList<Parameter>();
-				params .add(param);
 				url = baseUrl + url;
-				int statuCode = myHttp.put(url, params).getCode();
+				int statuCode = myHttp.put(url, p.getPut().getParameters()).getCode();
 				this.motif = String.valueOf(statuCode)+" Param = "+badParam;
 				if(statuCode == 404){
 					this.rapportPut += this.interpreteResult(true, PUT, url);
@@ -133,6 +130,25 @@ public class TestBadParam extends ModelTest {
 		this.testPostBadParam(5, url);
 		this.testPutBadParam(5, url);
 		return this.rapportGet+this.rapportPost+this.rapportPut;
+	}
+
+	public MyHttp getMyHttp() {
+		return myHttp;
+	}
+
+	public void setMyHttp(MyHttp myHttp) {
+		this.myHttp = myHttp;
+	}
+	public String getRapportGet() {
+		return rapportGet;
+	}
+
+	public String getRapportPost() {
+		return rapportPost;
+	}
+
+	public String getRapportPut() {
+		return rapportPut;
 	}
 
 }

@@ -26,7 +26,6 @@ public class VerifyCode extends ModelTest{
 			 operation = p.getGet();
 			 responseCodes = p.getGet().getResponses();
 			 reponse = myHttp.get(url, p.getGet().getParameters());
-			 //System.out.println(reponse);
 		 }
 		if(method.equals(POST)){
 			operation = p.getPost();
@@ -55,11 +54,11 @@ public class VerifyCode extends ModelTest{
 	public String generateReport(String url) {
 		String res = "";
 		String baseUrl = url;
-		System.out.println("************* SIZE **************"+this.paths.keySet().size());
 		for(Map.Entry<String, Path> entr : this.paths.entrySet()){
 			Path p = entr.getValue();
 			url = baseUrl + entr.getKey();
 			if(p.getGet()!=null){
+				System.out.println(url);
 				res+=this.interpreteResult(verifierCodeRetour(url,p,GET), GET, url);
 			}
 			if(p.getPost() !=null){
