@@ -11,24 +11,21 @@ public class TestBadUrl extends ModelTest{
 	private static final String POST = "POST";
 	private static final String PUT = "PUT";
 	private int nbBadUrl;
-
+	private MyHttp myHttp; 
 	public TestBadUrl( int nbBadUrl,Map<String,Path> paths) {
 		super("Bad URL",paths);
 		this.nbBadUrl = nbBadUrl;
+		this.myHttp = new MyHttp();
 	}
 
 	@Override
-	public String generateReport(String url) {
+	public String generateReport(String baseUrl) {
 		String res="";
 		List<String> urls = new ArrayList<String>();
 		urls.addAll(this.paths.keySet());
-		for(int i = 0; i < this.nbBadUrl; i++ ){
-			int index = (int) (Math.random()*urls.size()); 
-			String badUrl = urls.get(index)+index;
-			while(urls.contains(badUrl)){
-				badUrl+=Math.random()*urls.size();
-			}
-			badUrl= url+badUrl;
+		List<String> badUrls = generateBadUrls(urls);
+		for(String badUrl : badUrls){
+			badUrl= baseUrl+badUrl;
 			List<String> methods = new ArrayList<String>();
 			try {
 				methods.add(GET);
@@ -38,20 +35,28 @@ public class TestBadUrl extends ModelTest{
 				System.out.println(e.toString());
 			}
 			for(String m : methods){
-				MyHttpResponse reponse = MyHttp.httpReq(badUrl, m);
-				String resTest = "";
-				String classColor = "";
+				MyHttpResponse reponse = myHttp.httpReq(badUrl, m);
+				this.motif = String.valueOf(reponse.getCode());
 				if(reponse.getCode() == 404){
-					resTest = "OK";
-					classColor = "class=\"hidden-xs bg-success\"";
+					res+=this.interpreteResult(true, m, badUrl);
 				}
 				else {
-					resTest = "KO";
-					classColor = "class=\"hidden-xs bg-danger\"";
+					res+=this.interpreteResult(false, m, badUrl);
 				}
-				res += "<tr "+classColor+">";
-				res+="<td>"+this.getTestName()+" </td><td> "+m+"</td><td>"+badUrl+" </td><td>  "+resTest+"</td><td>"+reponse.getCode()+"</td></tr>\n";
 			}
+		}
+		return res;
+	}
+
+	public List<String> generateBadUrls(List<String> urls) {
+		List<String> res = new ArrayList<String>();
+		for(int i = 0; i < this.nbBadUrl; i++ ){
+			int index = (int) (Math.random()*urls.size()); 
+			String badUrl = urls.get(index)+index;
+			while(urls.contains(badUrl)){
+				badUrl+=Math.random()*urls.size();
+			}
+			res.add(badUrl);
 		}
 		return res;
 	}

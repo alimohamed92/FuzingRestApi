@@ -7,58 +7,48 @@ import io.swagger.models.Path;
 import io.swagger.models.Response;
 
 public class VerifyCode extends ModelTest{
-	private final String CODEOK = "OK";
-	private final String CODEKO = "KO";
 	private final String GET ="GET";
 	private final String POST ="POST";
 	private final String PUT ="PUT";
-	
+	private MyHttp myHttp; 
 	public VerifyCode(Map<String,Path> paths) {
 		super("Verif code de retour", paths);
+		this.myHttp = new MyHttp();
 	}
 
-	private String httpMethod (String url, Path p, String method) {
-		String res ="";
+	public  boolean verifierCodeRetour (String url, Path p, String method) {
 		int statuCode = 0;
+		boolean res = false;
 		Map<String, Response> responseCodes = null;
-		String methodName ="";
 		io.swagger.models.Operation operation = null;
 		MyHttpResponse reponse = new MyHttpResponse();
 		 if( method.equals(GET)){
 			 operation = p.getGet();
 			 responseCodes = p.getGet().getResponses();
-			 reponse = MyHttp.get(url, p.getGet().getParameters());
-			 methodName = GET;
+			 reponse = myHttp.get(url, p.getGet().getParameters());
+			 //System.out.println(reponse);
 		 }
 		if(method.equals(POST)){
 			operation = p.getPost();
-			reponse = MyHttp.post(url, p.getPost().getParameters());
+			reponse = myHttp.post(url, p.getPost().getParameters());
 			responseCodes = p.getPost().getResponses();
-			methodName = POST;
 		}
 		else if(method.equals(PUT)){
 			operation = p.getPut();
-			reponse = MyHttp.put(url, p.getPut().getParameters());
-			methodName = PUT;
+			reponse = myHttp.put(url, p.getPut().getParameters());
 			responseCodes = p.getPut().getResponses();
 		}
-		String resTest="";
-		String classColor = "";
 		if( operation != null ){
 			statuCode = reponse.getCode();
 			String str = String.valueOf(statuCode);
 			if(responseCodes !=null && responseCodes.containsKey(str)){
-				resTest += CODEOK ;
-				classColor = "class=\"hidden-xs bg-success\"";
+				res = true;
 			}
 			else {
-				resTest += CODEKO;
-				classColor = "class=\"hidden-xs bg-danger\"";
+				this.motif = "code retour ("+statuCode+") != code attendu";
+				res = false;
 			}
 		}
-		res += "<tr "+classColor+">";
-		res+="<td>"+this.getTestName()+" </td><td> "+methodName+"</td><td>"+url+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";
-	
 		return res;
 	}
 	@Override
@@ -70,16 +60,24 @@ public class VerifyCode extends ModelTest{
 			Path p = entr.getValue();
 			url = baseUrl + entr.getKey();
 			if(p.getGet()!=null){
-				res+=httpMethod(url,p,GET);
+				res+=this.interpreteResult(verifierCodeRetour(url,p,GET), GET, url);
 			}
 			if(p.getPost() !=null){
-				res+=httpMethod(url,p,POST);
+				res+=this.interpreteResult(verifierCodeRetour(url,p,POST), POST, url);
 			}
 			if(p.getPut() !=null){
-				res+=httpMethod(url,p,PUT);
+				res+=this.interpreteResult(verifierCodeRetour(url,p,PUT), PUT, url);
 			}
 		}
 		return res;
+	}
+
+	public MyHttp getMyHttp() {
+		return myHttp;
+	}
+
+	public void setMyHttp(MyHttp myHttp) {
+		this.myHttp = myHttp;
 	}
 
 }

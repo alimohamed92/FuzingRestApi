@@ -17,6 +17,10 @@ public class MyHttpResponse {
 	public void setContenu(String contenu) {
 		this.contenu = contenu;
 	}
+	@Override
+	public String toString() {
+		return "MyHttpResponse [code=" + code + ", contenu=" + contenu + "]";
+	}
 	
 	
 }

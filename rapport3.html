@@ -1,0 +1,74 @@
+ <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport de test</title>
+
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="tuto.css">
+
+</head>
+<body>
+ <div>
+     <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li class="active"> <a href="#">Accueil</a> </li>
+            <li> <a href="#">Liens utils</a> </li>
+            <li> <a href="#">Historique</a> </li>
+            <li> <a href="#">ALIMAX</a> </li>
+          </ul>
+          <form class="navbar-form navbar-right inline-form">
+            <div class="form-group">
+              <input type="search" class="input-sm form-control" placeholder="Recherche">
+              <button type="submit" class="btn btn-primary btn-sm">Chercher</button>
+            </div> 
+          </form>
+        </div>
+      </nav>
+  </div>
+<h1 class="title">  ALIMAX Fuzing REST API </h1>
+
+ <section class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Résultat des tests : </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-bordered table-responsive table-hover" id="dataTables-example">
+                <thead>
+                  <tr>
+                    <th>Type de test</th> <th>Méthode</th> <th>URL</th> <th>Résultat</th> <th>Motif</th>
+                  </tr>
+                </thead>
+                <tbody>
+                     
+                
+
+<tr class="hidden-xs bg-success"><td>Verif code de retour </td><td> GET</td><td>http://localhost:8080/v1/estimates/price </td><td>  OK</td><td></td></tr>
+<tr class="hidden-xs bg-success"><td>Verif code de retour </td><td> GET</td><td>http://localhost:8080/v1/estimates/time </td><td>  OK</td><td></td></tr>
+<tr class="hidden-xs bg-success"><td>Verif code de retour </td><td> GET</td><td>http://localhost:8080/v1/history </td><td>  OK</td><td></td></tr>
+<tr class="hidden-xs bg-success"><td>Verif code de retour </td><td> GET</td><td>http://localhost:8080/v1/me </td><td>  OK</td><td></td></tr>
+<tr class="hidden-xs bg-success"><td>Verif code de retour </td><td> GET</td><td>http://localhost:8080/v1/products </td><td>  OK</td><td></td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> GET</td><td>http://localhost:8080/v1/products4 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> POST</td><td>http://localhost:8080/v1/products4 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> PUT</td><td>http://localhost:8080/v1/products4 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> GET</td><td>http://localhost:8080/v1/estimates/price0 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> POST</td><td>http://localhost:8080/v1/estimates/price0 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> PUT</td><td>http://localhost:8080/v1/estimates/price0 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> GET</td><td>http://localhost:8080/v1/history2 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> POST</td><td>http://localhost:8080/v1/history2 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> PUT</td><td>http://localhost:8080/v1/history2 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> GET</td><td>http://localhost:8080/v1/estimates/time1 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> POST</td><td>http://localhost:8080/v1/estimates/time1 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> PUT</td><td>http://localhost:8080/v1/estimates/time1 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> GET</td><td>http://localhost:8080/v1/estimates/time1 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> POST</td><td>http://localhost:8080/v1/estimates/time1 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-success"><td>Bad URL </td><td> PUT</td><td>http://localhost:8080/v1/estimates/time1 </td><td>  OK</td><td>404</td></tr>
+<tr class="hidden-xs bg-danger"><td>BAD PARAM  </td><td> GET</td><td>http://localhost:8080/v1/estimates/time </td><td>  KO</td><td>200 Param = customer_uuidBAD</td></tr>
+<tr class="hidden-xs bg-danger"><td>BAD PARAM  </td><td> GET</td><td>http://localhost:8080/v1/history </td><td>  KO</td><td>200 Param = offsetBAD</td></tr>
+<tr class="hidden-xs bg-success"><td>Test de type de retour </td><td> GET</td><td>http://localhost:8080/v1/estimates/price </td><td>  OK</td><td></td></tr>
+<tr class="hidden-xs bg-success"><td>Test de type de retour </td><td> GET</td><td>http://localhost:8080/v1/estimates/time </td><td>  OK</td><td></td></tr>
+<tr class="hidden-xs bg-danger"><td>Test de type de retour </td><td> GET</td><td>http://localhost:8080/v1/history </td><td>  KO</td><td>type ref spécifié != type donnée renvoyée</td></tr>
+<tr class="hidden-xs bg-danger"><td>Test de type de retour </td><td> GET</td><td>http://localhost:8080/v1/me </td><td>  KO</td><td>type ref spécifié != type donnée renvoyée</td></tr>
+<tr class="hidden-xs bg-success"><td>Test de type de retour </td><td> GET</td><td>http://localhost:8080/v1/products </td><td>  OK</td><td>type ref spécifié != type donnée renvoyée</td></tr>
+</tbody></table></div</div></section></body></html>

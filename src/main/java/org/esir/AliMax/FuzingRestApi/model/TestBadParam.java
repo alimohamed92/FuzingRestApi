@@ -1,6 +1,5 @@
 package org.esir.AliMax.FuzingRestApi.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +9,19 @@ import io.swagger.models.parameters.Parameter;
 
 public class TestBadParam extends ModelTest {
 
+	private static final String GET = "GET";
+	private static final String POST = "POST";
+	private static final String PUT = "PUT";
+	private MyHttp myHttp; 
+	private String rapportGet;
+	private String rapportPost;
+	private String rapportPut;
 	public TestBadParam(Map<String, Path> paths) {
 		super("BAD PARAM ", paths);
-		// TODO Auto-generated constructor stub
+		this.rapportGet = "";
+		this.rapportPost = "";
+		this.rapportPut = "";
+		this.myHttp = new MyHttp();
 	}
 
 	private List<String> selectUrl(int nbUrl){
@@ -27,108 +36,103 @@ public class TestBadParam extends ModelTest {
 		return res;
 	}
 
-	public String testGetBadParam(int nbUrl,String baseUrl){
-		String res = "";
+	public boolean testGetBadParam(int nbUrl,String baseUrl){
+		boolean res = true;
 		List<String> l = this.selectUrl(nbUrl);
 		for(String url : l){
 			Path p = this.paths.get(url);
 			if(p.getGet() != null && p.getGet().getParameters() != null && p.getGet().getParameters().size()!=0){
 				int index = (int) (Math.random()*(p.getGet().getParameters().size()-1));
 				Parameter param = p.getGet().getParameters().get(index );
-				String badParam = param.getName()+"bad"; //param.getPattern()
+				String badParam = param.getName()+"BAD"; //param.getPattern()
 				param.setName(badParam);
 				List<Parameter> params = new ArrayList<Parameter>();
 				params .add(param);
 				url = baseUrl + url;
-				int statuCode = MyHttp.get(url, params).getCode();
+				int statuCode = myHttp.get(url, params).getCode();
 				//String str = new String(m.getResponseBody());
 				//					 JSONObject jsonObj = new JSONObject(str);
 				//					 Object o = jsonObj.get("code");
 				//					 Swagger swagger = new SwaggerParser().read("swagger1.json");
 				//					 Model model = swagger.getDefinitions().get("PriceEstimate");
 				//					System.out.println("$$$$$ "+jsonObj+" comparType : "+ComparateurType.verifierTypeRef(model, jsonObj)+jsonObj.getClass().getSimpleName());
-				String resTest = ""; 
-				String classColor = "";
+				this.motif = String.valueOf(statuCode)+" Param = "+badParam;
 				if(statuCode == 404){
-					resTest = "OK";
-					classColor = "class=\"hidden-xs bg-success\"";
+					this.rapportGet+=this.interpreteResult(true, GET, url);
 				}
 				else {
-					resTest = "KO";
-					classColor = "class=\"hidden-xs bg-danger\"";
+					res = false;
+					this.rapportGet+=this.interpreteResult(false, GET, url);
 				}
-				res += "<tr "+classColor+">";
-				res+="<td>"+this.getTestName()+" </td><td> GET "+"</td><td>  "+url+" Param = "+badParam+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";
 			}
 		}
 		return res;
 
 	}
 
-	public String testPostBadParam(int nbUrl,String baseUrl){
-		String res = "";
+	public boolean testPostBadParam(int nbUrl,String baseUrl){
+		boolean res = true;
 		List<String> l = this.selectUrl(nbUrl);
 		for(String url : l){
 			Path p = this.paths.get(url);
 			if(p.getPost() != null && p.getPost().getParameters() != null && p.getPost().getParameters().size()!=0){
 				int index = (int) (Math.random()*(p.getPost().getParameters().size()-1));
 				Parameter param = p.getPost().getParameters().get(index );
-				String badParam = param.getName()+"bad"; //param.getPattern()
+				String badParam = param.getName()+"BAD"; //param.getPattern()
 				param.setName(badParam);
 				List<Parameter> params = new ArrayList<Parameter>();
 				params .add(param);
 				url = baseUrl + url;
-				int statuCode = MyHttp.post(url, params).getCode();
-				String resTest = ""; 
-				String classColor = "";
+				int statuCode = myHttp.post(url, params).getCode();
+				//si on a un 404 correspondant au résultat attendu, on laisse le res à sa valeur précedente 
+				//(true si on a tjrs eu 404)
+				this.motif = String.valueOf(statuCode)+" Param = "+badParam;
 				if(statuCode == 404){
-					resTest = "OK";
-					classColor = "class=\"hidden-xs bg-success\"";
+					this.rapportPost+= this.interpreteResult(true, POST, url);
 				}
 				else {
-					resTest = "KO";
-					classColor = "class=\"hidden-xs bg-danger\"";
+					res = false;
+					this.rapportPost += this.interpreteResult(false, POST, url);
 				}
-				res += "<tr "+classColor+">";
-				res+="<td>"+this.getTestName()+" </td><td> POST "+"</td><td>  "+url+" Param = "+badParam+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";	}
+			}
 		}
 		return res;
 
 	}
 
-	public String testPutBadParam(int nbUrl,String baseUrl){
-		String res = "";
+	public boolean testPutBadParam(int nbUrl,String baseUrl){
+		boolean res = true;
 		List<String> l = this.selectUrl(nbUrl);
 		for(String url : l){
 			Path p = this.paths.get(url);
 			if(p.getPut() != null && p.getPut() .getParameters() != null && p.getPut().getParameters().size()!=0){
 				int index = (int) (Math.random()*(p.getPut().getParameters().size()-1));
 				Parameter param = p.getPut().getParameters().get(index );
-				String badParam = param.getName()+"bad"; //param.getPattern()
+				String badParam = param.getName()+"BAD"; //param.getPattern()
 				param.setName(badParam);
 				List<Parameter> params = new ArrayList<Parameter>();
 				params .add(param);
 				url = baseUrl + url;
-				int statuCode = MyHttp.put(url, params).getCode();
-				String resTest = ""; 
-				String classColor = "";
+				int statuCode = myHttp.put(url, params).getCode();
+				this.motif = String.valueOf(statuCode)+" Param = "+badParam;
 				if(statuCode == 404){
-					resTest = "OK";
-					classColor = "class=\"hidden-xs bg-success\"";
+					this.rapportPut += this.interpreteResult(true, PUT, url);
 				}
 				else {
-					resTest = "KO";
-					classColor = "class=\"hidden-xs bg-danger\"";
+					res = false;
+					this.rapportPut += this.interpreteResult(false, PUT, url);
 				}
-				res += "<tr "+classColor+">";
-				res+="<td>"+this.getTestName()+" </td><td> PUT "+"</td><td>  "+url+" Param = "+badParam+" </td><td>  "+resTest+"</td><td>"+statuCode+"</td></tr>\n";	}
+			}
 		}
 		return res;
 
 	}
 	@Override
 	public String generateReport(String url) {
-		return this.testGetBadParam(5,url) + this.testPostBadParam(5, url)+this.testPutBadParam(5, url);
+		this.testGetBadParam(5,url);
+		this.testPostBadParam(5, url);
+		this.testPutBadParam(5, url);
+		return this.rapportGet+this.rapportPost+this.rapportPut;
 	}
 
 }

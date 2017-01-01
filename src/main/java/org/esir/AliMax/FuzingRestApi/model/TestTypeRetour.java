@@ -10,29 +10,26 @@ import io.swagger.models.Response;
 public class TestTypeRetour extends ModelTest {
 	private static final String ERROR = "error";
 	private static final String REF = "ref";
-	private final String CODEOK = "OK";
-	private final String CODEKO = "KO";
 	private final String GET ="GET";
 	private final String POST ="POST";
 	private final String PUT ="PUT";
+	private MyHttp myHttp; 
 
 	private Map<String, Model> defs; 
 	public TestTypeRetour(Map<String, Path> paths,Map<String, Model> defs ) {
 		super("Test de type de retour", paths);
 		this.defs = defs;
+		this.myHttp = new MyHttp();
 	}
 
-	public String verifierType (String url, Path p, String method) {
-		String res ="";
+	public boolean verifierType (String url, Path p, String method) {
+		boolean resTestType = false;
 		MyHttpResponse reponse = new MyHttpResponse();
-		String methodName ="";
 		io.swagger.models.Operation operation = null;
 		String typeRetour = "";
-		String motif ="";
-
 		if( method.equals(GET)){
 			operation = p.getGet();
-			reponse = MyHttp.get(url, p.getGet().getParameters());
+			reponse = myHttp.get(url, p.getGet().getParameters());
 			Response tmp = p.getGet().getResponses().get(String.valueOf(reponse.getCode()));
 			if(tmp !=null){
 				typeRetour = tmp.getSchema().getType();
@@ -40,11 +37,10 @@ public class TestTypeRetour extends ModelTest {
 			else {
 				typeRetour = ERROR;
 			}
-			methodName = GET;
 		}
 		else if(method.equals(POST)){
 			operation = p.getPost();
-			reponse = MyHttp.post(url, p.getPost().getParameters());
+			reponse = myHttp.post(url, p.getPost().getParameters());
 			Response tmp = p.getPost().getResponses().get(reponse.getCode());
 			if(tmp !=null){
 				typeRetour = tmp.getSchema().getType();
@@ -52,11 +48,10 @@ public class TestTypeRetour extends ModelTest {
 			else {
 				typeRetour = ERROR;
 			}
-			methodName = POST;
 		}
 		else if(method.equals(PUT)){
 			operation = p.getPut();
-			reponse = MyHttp.put(url, p.getPut().getParameters());
+			reponse = myHttp.put(url, p.getPut().getParameters());
 			Response tmp = p.getPut().getResponses().get(reponse.getCode());
 			if(tmp !=null){
 				typeRetour = tmp.getSchema().getType();
@@ -64,14 +59,10 @@ public class TestTypeRetour extends ModelTest {
 			else {
 				typeRetour = ERROR;
 			}
-			methodName = PUT;
 		}
-		String resTest="";
-		String classColor = "";
 		if( operation != null ){
-			boolean resTestType = false;
 			if(typeRetour.equals(ERROR)){
-				motif = "mauvais code de retour";
+				return false;
 			}
 			else if(typeRetour.equalsIgnoreCase(REF)){
 				try {
@@ -80,29 +71,19 @@ public class TestTypeRetour extends ModelTest {
 						resTestType = ComparateurType.verifierTypeRef(m, json);
 						if(resTestType) break;
 					}
-					if(!resTestType) motif = "type ref spécifié != type donnée renvoyée";
+					if(!resTestType) this.motif = "type ref spécifié != type donnée renvoyée";
 				} catch (Exception e) {
 					resTestType = false;
-					motif = "erreur de conversion json";
+					this.motif = "erreur de conversion json";
 				}
 			}
 			else{
 				resTestType = ComparateurType.verifierTypePrim(typeRetour, reponse.getContenu());
-				if(!resTestType) motif = "type("+typeRetour+")spécifié != type donnée renvoyée";
-			}
-			if(resTestType){
-				resTest += CODEOK ;
-				classColor = "class=\"hidden-xs bg-success\"";
-			}
-			else {
-				resTest += CODEKO;
-				classColor = "class=\"hidden-xs bg-danger\"";
+				if(!resTestType) this.motif = "type("+typeRetour+")spécifié != type donnée renvoyée";
 			}
 		}
-		res += "<tr "+classColor+">";
-		res+="<td>"+this.getTestName()+" </td><td> "+methodName+"</td><td>"+url+" </td><td>  "+resTest+"</td><td>"+motif+"</td></tr>\n";
 
-		return res;
+		return resTestType;
 	}
 
 	@Override
@@ -115,13 +96,13 @@ public class TestTypeRetour extends ModelTest {
 			Path p = entr.getValue();
 			url = baseUrl + entr.getKey();
 			if(p.getGet()!=null){
-				res+=verifierType(url,p,GET);
+				res+=this.interpreteResult(verifierType(url,p,GET), GET, url);
 			}
 			if(p.getPost() !=null){
-				res+=verifierType(url,p,POST);
+				res+=this.interpreteResult(verifierType(url,p,POST), POST, url);
 			}
 			if(p.getPut() !=null){
-				res+=verifierType(url,p,PUT);
+				res+=this.interpreteResult(verifierType(url,p,PUT), PUT, url);
 			}
 			i++;
 		}

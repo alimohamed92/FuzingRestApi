@@ -25,7 +25,11 @@ public class AppTest
      */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+    	TestSuite suite = new TestSuite();
+    	suite.addTestSuite(AppTest.class );
+    	suite.addTestSuite(TestBadUrlUnitTest.class);
+    	suite.addTestSuite(VerifyCodeUnitTest.class);
+        return suite;
     }
 
     /**
@@ -35,4 +39,8 @@ public class AppTest
     {
         assertTrue( true );
     }
+    
+//    public static void main(String[] args) {
+//    	junit.textui.TestRunner.run(suite());
+//    	}
 }

@@ -14,7 +14,7 @@ import io.swagger.models.parameters.Parameter;
 public class MyHttp {
 
 
-	public static MyHttpResponse get(String url,List<Parameter> params){
+	public  MyHttpResponse get(String url,List<Parameter> params){
 		MyHttpResponse res = new MyHttpResponse();
 		try {
 			HttpClient client = new HttpClient();
@@ -36,7 +36,7 @@ public class MyHttp {
 		return res;
 	}
 
-	public static MyHttpResponse post(String url,List<Parameter> params){
+	public  MyHttpResponse post(String url,List<Parameter> params){
 		MyHttpResponse res = new MyHttpResponse();
 		try {
 			HttpClient client = new HttpClient();
@@ -59,7 +59,7 @@ public class MyHttp {
 
 	}
 
-	public static MyHttpResponse put(String url,List<Parameter> params){
+	public  MyHttpResponse put(String url,List<Parameter> params){
 		MyHttpResponse res = new MyHttpResponse();
 		try {
 			HttpClient client = new HttpClient();
@@ -82,7 +82,7 @@ public class MyHttp {
 
 	}
 	
-	public static MyHttpResponse httpReq(String url, String method){
+	public  MyHttpResponse httpReq(String url, String method){
 		List<Parameter> params = new ArrayList<Parameter>();
 		if(method.equalsIgnoreCase("GET")){
 			return get(url, params);
@@ -94,6 +94,9 @@ public class MyHttp {
 			return put(url, params);
 		}
 		return null;
+	}
+	public boolean test(String url,List<Parameter> params){
+		return true;
 	}
 
 }
