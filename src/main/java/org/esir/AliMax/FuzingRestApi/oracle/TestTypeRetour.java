@@ -99,12 +99,15 @@ public class TestTypeRetour extends ModelTest {
 			url = baseUrl + entr.getKey();
 			if(p.getGet()!=null){
 				res+=this.interpreteResult(verifierType(url,p,GET), GET, url);
+				this.motif = "";
 			}
 			if(p.getPost() !=null){
 				res+=this.interpreteResult(verifierType(url,p,POST), POST, url);
+				this.motif = "";
 			}
 			if(p.getPut() !=null){
 				res+=this.interpreteResult(verifierType(url,p,PUT), PUT, url);
+				this.motif = "";
 			}
 			i++;
 		}

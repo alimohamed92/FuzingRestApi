@@ -101,7 +101,7 @@ public class TestBadParam extends ModelTest {
 			if(p.getPut() != null && p.getPut() .getParameters() != null && p.getPut().getParameters().size()!=0){
 				int index = (int) (Math.random()*(p.getPut().getParameters().size()-1));
 				Parameter param = p.getPut().getParameters().get(index );
-				String badParam = param.getName()+"BAD"; //param.getPattern()
+				String badParam = param.getName()+"BAD"; 
 				param.setName(badParam);
 				url = baseUrl + url;
 				int statuCode = myHttp.put(url, p.getPut().getParameters()).getCode();
