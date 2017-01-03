@@ -48,14 +48,7 @@ public class TestBadParam extends ModelTest {
 				String badParam = param.getName()+"BAD";
 				param.setName(badParam);
 				url = baseUrl + url;
-				//System.out.println(myHttp.get(url, p.getGet().getParameters())+" url "+url+" param : "+p.getGet().getParameters());
 				int statuCode = myHttp.get(url, p.getGet().getParameters()).getCode();
-				//String str = new String(m.getResponseBody());
-				//					 JSONObject jsonObj = new JSONObject(str);
-				//					 Object o = jsonObj.get("code");
-				//					 Swagger swagger = new SwaggerParser().read("swagger1.json");
-				//					 Model model = swagger.getDefinitions().get("PriceEstimate");
-				//					System.out.println("$$$$$ "+jsonObj+" comparType : "+ComparateurType.verifierTypeRef(model, jsonObj)+jsonObj.getClass().getSimpleName());
 				this.motif = String.valueOf(statuCode)+" Param = "+badParam;
 				if(statuCode == 404){
 					this.rapportGet+=this.interpreteResult(true, GET, url);

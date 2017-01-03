@@ -29,7 +29,7 @@ public class App
 	public static void generatehtml(String rap,String name)
 	{   
 		String str =readTemplate();
-		System.out.println( "Hello World!" );
+		System.out.println( "Bonjour!" );
 		File f = new File (name);
 		try
 		{

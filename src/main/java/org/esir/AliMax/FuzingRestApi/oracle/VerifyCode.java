@@ -59,7 +59,6 @@ public class VerifyCode extends ModelTest{
 			Path p = entr.getValue();
 			url = baseUrl + entr.getKey();
 			if(p.getGet()!=null){
-				System.out.println(url);
 				res+=this.interpreteResult(verifierCodeRetour(url,p,GET), GET, url);
 			}
 			if(p.getPost() !=null){
