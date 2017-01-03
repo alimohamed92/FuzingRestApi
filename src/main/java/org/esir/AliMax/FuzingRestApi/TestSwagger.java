@@ -2,6 +2,7 @@ package org.esir.AliMax.FuzingRestApi;
 import io.swagger.parser.SwaggerParser;
 
 import java.util.Map;
+import java.util.Scanner;
 
 import org.esir.AliMax.FuzingRestApi.oracle.ModelTest;
 import org.esir.AliMax.FuzingRestApi.oracle.TestBadParam;
@@ -17,7 +18,10 @@ import io.swagger.models.Swagger;
 public class TestSwagger {
 
 	public static void main(String[] args) {
-		Swagger swagger = new SwaggerParser().read("swagger1.json");
+		Scanner sc = new Scanner(System.in);
+		String input = sc.nextLine();
+		System.out.println(input);
+		Swagger swagger = new SwaggerParser().read(input);
 		Map<String, Model> defs = swagger.getDefinitions();
 		String baseUrl = swagger.getBasePath();
 		Map<String,Path> paths = swagger.getPaths();
@@ -40,7 +44,7 @@ public class TestSwagger {
 		 test = new TestTypeRetour(paths,defs);
 		 rapport+=test.generateReport(url);
 		 App.generatehtml(rapport, "rapport3.html");
-		
+		 
 		 
 	}
 }

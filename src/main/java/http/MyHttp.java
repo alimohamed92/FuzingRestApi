@@ -30,7 +30,7 @@ public class MyHttp {
 		} catch (HttpException e) {
 			res.setCode(11000);
 			res.setContenu("HttpException");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			res.setCode(11111);
 			res.setContenu("OException");
 		}
@@ -52,7 +52,7 @@ public class MyHttp {
 		} catch (HttpException e) {
 			res.setCode(11000);
 			res.setContenu("HttpException");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			res.setCode(11111);
 			res.setContenu("OException");
 		}
@@ -75,7 +75,7 @@ public class MyHttp {
 		} catch (HttpException e) {
 			res.setCode(11000);
 			res.setContenu("HttpException");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			res.setCode(11111);
 			res.setContenu("OException");
 		}

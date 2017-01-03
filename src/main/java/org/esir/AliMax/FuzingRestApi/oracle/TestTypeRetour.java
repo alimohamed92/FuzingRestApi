@@ -32,7 +32,8 @@ public class TestTypeRetour extends ModelTest {
 		if( method.equals(GET)){
 			operation = p.getGet();
 			reponse = myHttp.get(url, p.getGet().getParameters());
-			Response tmp = p.getGet().getResponses().get(String.valueOf(reponse.getCode()));
+			String cde = String.valueOf(reponse.getCode());
+			Response tmp = p.getGet().getResponses().get(String.valueOf(cde));
 			if(tmp !=null){
 				typeRetour = tmp.getSchema().getType();
 			}
@@ -43,7 +44,8 @@ public class TestTypeRetour extends ModelTest {
 		else if(method.equals(POST)){
 			operation = p.getPost();
 			reponse = myHttp.post(url, p.getPost().getParameters());
-			Response tmp = p.getPost().getResponses().get(reponse.getCode());
+			String cde = String.valueOf(reponse.getCode());
+			Response tmp = p.getPost().getResponses().get(cde);
 			if(tmp !=null){
 				typeRetour = tmp.getSchema().getType();
 			}
@@ -54,7 +56,8 @@ public class TestTypeRetour extends ModelTest {
 		else if(method.equals(PUT)){
 			operation = p.getPut();
 			reponse = myHttp.put(url, p.getPut().getParameters());
-			Response tmp = p.getPut().getResponses().get(reponse.getCode());
+			String cde = String.valueOf(reponse.getCode());
+			Response tmp = p.getPut().getResponses().get(cde);
 			if(tmp !=null){
 				typeRetour = tmp.getSchema().getType();
 			}

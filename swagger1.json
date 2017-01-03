@@ -5,7 +5,7 @@
         "description": "Move your app forward with the Uber API",
         "version": "1.0.0"
     },
-    "host": "api.uber.com",
+    "host": "localhost:8080",
     "schemes": [
         "https"
     ],
