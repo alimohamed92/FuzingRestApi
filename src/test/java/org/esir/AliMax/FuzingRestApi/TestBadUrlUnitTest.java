@@ -3,9 +3,9 @@ package org.esir.AliMax.FuzingRestApi;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.esir.AliMax.FuzingRestApi.model.MyHttp;
-import org.esir.AliMax.FuzingRestApi.model.TestBadUrl;
+import org.esir.AliMax.FuzingRestApi.oracle.TestBadUrl;
 
+import http.MyHttp;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 import junit.framework.TestCase;

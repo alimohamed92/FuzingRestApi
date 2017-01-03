@@ -1,4 +1,4 @@
-package org.esir.AliMax.FuzingRestApi.model;
+package http;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import org.apache.commons.httpclient.methods.*;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 
 import io.swagger.models.parameters.Parameter;
+import model.MyHttpResponse;
 
 public class MyHttp {
 

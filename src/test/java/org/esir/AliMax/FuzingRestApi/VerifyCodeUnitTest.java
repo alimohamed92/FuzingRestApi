@@ -7,15 +7,15 @@ import static org.mockito.Mockito.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.esir.AliMax.FuzingRestApi.model.MyHttp;
-import org.esir.AliMax.FuzingRestApi.model.MyHttpResponse;
-import org.esir.AliMax.FuzingRestApi.model.VerifyCode;
+import org.esir.AliMax.FuzingRestApi.oracle.VerifyCode;
 import org.mockito.Mockito;
 
+import http.MyHttp;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 import junit.framework.TestCase;
+import model.MyHttpResponse;
 
 /**
  * @author AliMohamed

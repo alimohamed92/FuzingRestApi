@@ -1,10 +1,12 @@
-package org.esir.AliMax.FuzingRestApi.model;
+package org.esir.AliMax.FuzingRestApi.oracle;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import http.MyHttp;
 import io.swagger.models.Path;
+import model.MyHttpResponse;
 
 public class TestBadUrl extends ModelTest{
 	private static final String GET = "GET";

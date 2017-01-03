@@ -1,4 +1,4 @@
-package org.esir.AliMax.FuzingRestApi.model;
+package model;
 
 public class MyHttpResponse {
 

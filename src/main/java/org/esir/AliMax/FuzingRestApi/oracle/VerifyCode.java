@@ -1,10 +1,11 @@
-package org.esir.AliMax.FuzingRestApi.model;
+package org.esir.AliMax.FuzingRestApi.oracle;
 
 import java.util.Map;
 
-
+import http.MyHttp;
 import io.swagger.models.Path;
 import io.swagger.models.Response;
+import model.MyHttpResponse;
 
 public class VerifyCode extends ModelTest{
 	private final String GET ="GET";

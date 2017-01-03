@@ -1,11 +1,13 @@
-package org.esir.AliMax.FuzingRestApi.model;
+package org.esir.AliMax.FuzingRestApi.oracle;
 
 import java.util.Map;
 import org.json.JSONObject;
 
+import http.MyHttp;
 import io.swagger.models.Model;
 import io.swagger.models.Path;
 import io.swagger.models.Response;
+import model.MyHttpResponse;
 
 public class TestTypeRetour extends ModelTest {
 	private static final String ERROR = "error";

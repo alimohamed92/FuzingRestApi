@@ -1,4 +1,4 @@
-package org.esir.AliMax.FuzingRestApi.model;
+package org.esir.AliMax.FuzingRestApi.oracle;
 
 import java.io.IOException;
 import java.util.Map;

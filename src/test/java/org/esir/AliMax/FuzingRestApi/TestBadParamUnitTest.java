@@ -3,20 +3,14 @@ package org.esir.AliMax.FuzingRestApi;
 import static org.mockito.Mockito.mock;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import static org.mockito.Matchers.any;
-
-import org.esir.AliMax.FuzingRestApi.model.MyHttp;
-import org.esir.AliMax.FuzingRestApi.model.MyHttpResponse;
-import org.esir.AliMax.FuzingRestApi.model.TestBadParam;
-import org.esir.AliMax.FuzingRestApi.model.VerifyCode;
-import org.mockito.Matchers;
+import model.MyHttpResponse;
+import org.esir.AliMax.FuzingRestApi.oracle.TestBadParam;
 import org.mockito.Mockito;
 
+import http.MyHttp;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-import io.swagger.models.parameters.Parameter;
 import io.swagger.parser.SwaggerParser;
 import junit.framework.TestCase;
 
