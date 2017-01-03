@@ -22,7 +22,7 @@ public class TypeRetourUnitTest extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		swagger = new SwaggerParser().read("swagger.json");
+		swagger = new SwaggerParser().read("swagger1.json");
 	}
 
 	public void testcodeOkGET(){

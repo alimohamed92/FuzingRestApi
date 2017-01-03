@@ -198,6 +198,135 @@
                 }
             }
         },
+         "/sccr/periods/{period}" : {
+      "post" : {
+        "tags" : [ "ORA - SCCR" ],
+        "summary" : "Validate a period",
+        "description" : "",
+        "operationId" : "savePeriodValidation",
+        "parameters" : [ {
+          "name" : "period",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+     "/personalization/thresholds/aar" : {
+      "get" : {
+        "tags" : [ "ORA - Personnalisation" ],
+        "summary" : "Get the access availibility rates by service for a period",
+        "description" : "",
+        "operationId" : "getAARThresholds",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "periodId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "subscriptionId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ServiceAccessPersonnalisation"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "ORA - Personnalisation" ],
+        "summary" : "Update AAR rates for VPN by service for all frequency and for a period id",
+        "description" : "",
+        "operationId" : "updateAARThresholds",
+        "consumes" : [ "application/json", "text/plain" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "periodId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "subscriptionId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ServiceAccessPersonnalisation"
+              }
+            }
+          }
+        }
+      }
+    },
+     "/personalization/calculation/mode/aar" : {
+      "get" : {
+        "tags" : [ "ORA - Personnalisation" ],
+        "summary" : "Get the AAR calculation mode for a period id",
+        "description" : "",
+        "operationId" : "getAARCalculationMode",
+        "produces" : [ "text/plain" ],
+        "parameters" : [ {
+          "name" : "periodId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "ORA - Personnalisation" ],
+        "summary" : "Update AAR calculation mode for a period id",
+        "description" : "",
+        "operationId" : "updateAARCalculationMode",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "text/plain" ],
+        "parameters" : [ {
+          "name" : "periodId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
         "/history": {
             "get": {
                 "summary": "User Activity",

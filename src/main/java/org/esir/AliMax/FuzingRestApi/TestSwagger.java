@@ -43,7 +43,7 @@ public class TestSwagger {
 		 //test Verif type
 		 test = new TestTypeRetour(paths,defs);
 		 rapport+=test.generateReport(url);
-		 App.generatehtml(rapport, "rapport3.html");
+		 App.generatehtml(rapport, "rapport.html");
 		 
 		 
 	}

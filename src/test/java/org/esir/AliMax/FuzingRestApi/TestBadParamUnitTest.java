@@ -23,7 +23,7 @@ public class TestBadParamUnitTest extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		swagger = new SwaggerParser().read("swagger.json");
+		swagger = new SwaggerParser().read("swagger1.json");
 	}
 
 	
